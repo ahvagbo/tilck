@@ -19,10 +19,17 @@ struct pci_device_class {
 
 struct pci_device_loc {
 
-   u16 seg;       /* PCI Segment Group Number */
-   u8 bus;        /* PCI Bus */
-   u8 dev  : 5;   /* PCI Device Number */
-   u8 func : 3;   /* PCI Function Number */
+   union {
+
+      struct {
+         u16 seg;       /* PCI Segment Group Number */
+         u8 bus;        /* PCI Bus */
+         u8 dev  : 5;   /* PCI Device Number */
+         u8 func : 3;   /* PCI Function Number */
+      };
+
+      u32 raw;
+   };
 };
 
 static ALWAYS_INLINE struct pci_device_loc
