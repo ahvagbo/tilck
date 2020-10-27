@@ -9,6 +9,7 @@
 #include <tilck/common/printk.h>
 #include <tilck/common/utils.h>
 #include <tilck/common/compiler.h>
+#include <tilck/common/build_info.h>
 
 #include <multiboot.h>
 
@@ -246,9 +247,8 @@ out:
 static void
 show_hello_message(void)
 {
-   extern const char commit_hash[65];
-   const bool dirty = !strncmp(commit_hash, "dirty:", 6);
-   const char *const hash = dirty ? commit_hash + 6 : commit_hash;
+   const bool dirty = !strncmp(tilck_build_info.commit, "dirty:", 6);
+   const char *const hash = tilck_build_info.commit + (dirty ? 6 : 0);
 
    if (VER_PATCH > 0)
       printk("Hello from Tilck \e[1m%d.%d.%d\e[m",
